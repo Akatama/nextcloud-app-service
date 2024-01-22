@@ -1,12 +1,41 @@
 @description('name of the Vnet we will attach our VM to')
 param vnetName string
 
-@description('name of the Vnet resource group')
-param vnetResourceGroup string
+@description('Subnet we will attach our VM to')
+param storageSubnetName string = 'storage'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+@description('Provide Virtual Network Address Prefix')
+param vnetAddressPrefix string = '10.1.0.0/16'
+
+@description('Provide VM Subnet Address Prefix')
+param storageSubnetPrefix string = '10.1.0.0/24'
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: vnetName
-  scope: resourceGroup(vnetResourceGroup)
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        vnetAddressPrefix
+      ]
+    }
+    subnets: [
+      {
+        name: storageSubnetName
+        properties: {
+          addressPrefix: storageSubnetPrefix
+          serviceEndpoints: [
+            {
+              locations: [
+                location
+              ]
+              service: 'Microsoft.Storage'
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
 
 @description('Name base name of the resources')
@@ -141,10 +170,6 @@ resource mySQLServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = {
       iops: storageIops
       autoGrow: storageAutogrow
     }
-    // network: {
-    //   delegatedSubnetResourceId: virtualNetwork.properties.subnets[0].id
-    //   publicNetworkAccess: 'Enabled'
-    // }
     backup: {
       backupRetentionDays: backupRetentionDays
       geoRedundantBackup: geoRedundantBackup
