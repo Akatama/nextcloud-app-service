@@ -1,11 +1,10 @@
 #!/usr/bin/env pwsh
 <#
 .SYNOPSIS
-    Uses Ansible-Vault to get the password for the SQL Server admin
-    Then calls the Bicep file to build the SQL server
+    Creates all the resources we need to create an Nextcloud instance on Azure Web Apps using Containers
 
 .Example
-    ./deployandConfigAppService.ps1 -ResourceBaseName nextCloudBicep -ResourceGroupName app-jlindsey2 -Location "Central US" -VNetName nextcloud-bicep-vnet -DBdminName ncadmin
+    ./deployandConfigAppService.ps1 -ResourceBaseName nextcloud -ResourceGroupName nextcloud -Location "Central US" -VNetName nextcloud-vnet -DBdminName ncadmin -DBPassword <password> -SFTPPassword <password>
 #>
 param(
     [Parameter(Mandatory=$true)][string]$ResourceBaseName,
