@@ -31,5 +31,4 @@ jobs:
         scriptLocation: 'scriptPath'
         scriptPath: '$(System.DefaultWorkingDirectory)/deployandConfigAppService.ps1'
         arguments: '-ResourceBaseName $(ResourceBaseName) -ResourceGroupName $(ResourceGroupName) -Location "$(Location)" -VNetName $(VNetName) -DBAdminName $(DBAdminName) -DBPassword $(DBPassword) -SFTPPassword $(SFTPPassword)'
-        workingDirectory: '$(System.DefaultWorkingDirectory)''
-    
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
