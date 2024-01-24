@@ -4,13 +4,12 @@
     Creates all the resources we need to create an Nextcloud instance on Azure Web Apps using Containers
 
 .Example
-    ./deployandConfigAppService.ps1 -ResourceBaseName nextcloud -ResourceGroupName nextcloud -Location "Central US" -VNetName nextcloud-vnet -DBdminName ncadmin -DBPassword <password> -SFTPPassword <password>
+    ./deployandConfigAppService.ps1 -ResourceBaseName nextcloud -ResourceGroupName nextcloud -Location "Central US" -DBdminName ncadmin -DBPassword <password> -SFTPPassword <password>
 #>
 param(
     [Parameter(Mandatory=$true)][string]$ResourceBaseName,
     [Parameter(Mandatory=$true)][string]$ResourceGroupName,
     [Parameter(Mandatory=$true)][string]$Location,
-    [Parameter(Mandatory=$true)][string]$VNetName,
     [Parameter(Mandatory=$true)][string]$DBAdminName,
     [Parameter(Mandatory=$true)][string]$DBPassword,
     [Parameter(Mandatory=$true)][string]$SFTPPassword
@@ -19,10 +18,6 @@ param(
 $mySQlServerName = $ResourceBaseName
 $storageAccountName = "${ResourceBaseName}jimmystorage"
 $appName = "${ResourceBaseName}jimmy"
-
-# Turns off require secure transport on the mysql database flexible server
-$requireSecureTransport = Update-AzMySqlFlexibleServerConfiguration -Name require_secure_transport -ResourceGroupName $ResourceGroupName `
-    -ServerName $mySQlServerName -Value OFF
 
 # Creates the service plan
 az appservice plan create --name $appName --resource-group $ResourceGroupName --is-linux --location $Location --sku P1V2
