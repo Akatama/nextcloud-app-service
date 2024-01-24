@@ -12,7 +12,7 @@ param(
     [Parameter(Mandatory=$true)][string]$Location,
     [Parameter(Mandatory=$true)][string]$VNetName,
     [Parameter(Mandatory=$true)][string]$DBAdminName,
-    [Parameter(Mandatory=$true)][string]$DBPassword,
+    [Parameter(Mandatory=$true)][string]$DBPassword
 )
 
 New-AzResourceGroup -ResourceGroupName $ResourceGroupName -Location $Location
