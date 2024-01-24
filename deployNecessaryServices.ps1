@@ -4,7 +4,7 @@
     Creates all the resources we need to create an Nextcloud instance on Azure Web Apps using Containers
 
 .Example
-    ./deployandConfigAppService.ps1 -ResourceBaseName nextcloud -ResourceGroupName nextcloud -Location "Central US" -VNetName nextcloud-vnet -DBdminName ncadmin -DBPassword <password> -SFTPPassword <password>
+    ./deployNecessaryServices.ps1 -ResourceBaseName nextcloud -ResourceGroupName nextcloud -Location "Central US" -VNetName nextcloud-vnet -DBdminName ncadmin -DBPassword <password>
 #>
 param(
     [Parameter(Mandatory=$true)][string]$ResourceBaseName,
@@ -13,8 +13,16 @@ param(
     [Parameter(Mandatory=$true)][string]$VNetName,
     [Parameter(Mandatory=$true)][string]$DBAdminName,
     [Parameter(Mandatory=$true)][string]$DBPassword,
-    [Parameter(Mandatory=$true)][string]$SFTPPassword
 )
+
+New-AzResourceGroup -ResourceGroupName $ResourceGroupName -Location $Location
+
+$DBAdminPassword = ConvertTo-SecureString $DBPassword -AsPlainText -Force
+
+New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -Name main -TemplateFile ./bicep/main.bicep `
+    -resourceBaseName $ResourceBaseName -location $Location -vnetName $VNetName -storageAccountSkuName "Standard_LRS" `
+    -storageAccountKind "StorageV2" -administratorLogin $DBAdminName ` -administratorLoginPassword $DBAdminPassword
+
 
 $mySQlServerName = $ResourceBaseName
 $storageAccountName = "${ResourceBaseName}jimmystorage"
