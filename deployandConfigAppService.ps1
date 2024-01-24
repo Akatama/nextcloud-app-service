@@ -26,7 +26,7 @@ az appservice plan create --name $appName --resource-group $ResourceGroupName --
 az webapp create --name $appName --plan $appName --resource-group $ResourceGroupName --multicontainer-config-type compose --multicontainer-config-file docker_compose.yml
 
 # Stops the Web app
-az webapp stop --name $appName --rg $ResourceGroupName
+az webapp stop --name $appName --resource-group $ResourceGroupName
 
 az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings WEBSITES_CONTAINER_START_TIME_LIMIT=1800
 az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
@@ -44,4 +44,4 @@ az webapp connection create mysql-flexible --name $appName --resource-group $Res
 
 az webapp deployment user set --user-name $appName --password $SFTPPassword
 
-az webapp start --name $appName --rg $ResourceGroupName
+az webapp start --name $appName --resource-group $ResourceGroupName
