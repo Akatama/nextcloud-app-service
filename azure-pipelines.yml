@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+  - job: Run_App_Service_Deploy_Script
+    timeoutInMinutes: 30
+    steps:
+    - task: AzurePowerShell@5
+      inputs:
+        azureSubscription: 'cccis-jlindsey-sandbox(ff95cccd-cbb7-41a2-b4ba-41917218c03c)'
+        ScriptType: 'FilePath'
+        ScriptPath: '$(System.DefaultWorkingDirectory)/deployandConfigAppService.ps1'
+        ScriptArguments: '-ResourceBaseName $(ResourceBaseName) -ResourceGroupName $(ResourceGroupName) -Location $(Location) -VNetName $(VNetName) -DBAdminName $(DBAdminName) -DBPassword $(DBPassword) -SFTPPassword $(SFTPPassword)'
+        azurePowerShellVersion: 'LatestVersion'
+        pwsh: true
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
