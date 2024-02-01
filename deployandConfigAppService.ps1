@@ -31,6 +31,15 @@ az webapp stop --name $appName --resource-group $ResourceGroupName
 az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings WEBSITES_CONTAINER_START_TIME_LIMIT=1800
 az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
 
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings MYSQL_PASSWORD=$DBPassword
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings MYSQL_DATABASE=nextcloud
+
+
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings MYSQL_USER=$DBAdminName
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings MYSQL_HOST=nextcloud.mysql.database.azure.com
+
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings NEXTCLOUD_ADMIN_USER=jimmy
+az webapp config appsettings set --name $appName --resource-group $ResourceGroupName --settings NEXTCLOUD_ADMIN_PASSWORD=learningHow2DoDevOps
 
 # Gets the storage account key, then mounts it as a storage path on the web app
 $key = az storage account keys list  --account-name $storageAccountName --resource-group $ResourceGroupName --query [0].value
