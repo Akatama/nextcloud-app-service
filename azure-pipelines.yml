@@ -29,5 +29,5 @@ jobs:
         scriptType: 'pscore'
         scriptLocation: 'scriptPath'
         scriptPath: '$(System.DefaultWorkingDirectory)/deployandConfigAppService.ps1'
-        arguments: '-ResourceBaseName $(ResourceBaseName) -ResourceGroupName $(ResourceGroupName) -Location "$(Location)" -DBAdminName $(DBAdminName) -DBPassword $(DBPassword) -SFTPPassword $(SFTPPassword)'
+        arguments: '-ResourceBaseName $(ResourceBaseName) -ResourceGroupName $(ResourceGroupName) -Location "$(Location)" -DBAdminName $(DBAdminName) -DBPassword $(DBPassword) -SFTPPassword $(SFTPPassword) -NextcloudAdminName $(NextcloudAdminName) -NextcloudAdminPassword $(NextcloudAdminPassword) -UseDockerCompose $(UseDockerCompose)'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
