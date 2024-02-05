@@ -61,4 +61,6 @@ az mysql flexible-server firewall-rule create --resource-group $ResourceGroupNam
 
 az webapp deployment user set --user-name $appName --password $SFTPPassword
 
+az webapp restart --name $appName --resource-group $ResourceGroupName
+
 az webapp start --name $appName --resource-group $ResourceGroupName

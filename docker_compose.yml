@@ -5,7 +5,7 @@ services:
     volumes:
       - ${WEBAPP_STORAGE_HOME}/site/nextcloud:/var/www/html
       - ${WEBAPP_STORAGE_HOME}/site/ca:/etc/ssl/azure
-      # - data:/var/www/html/data
+      - data:/var/www/html/data
     ports:
       - 8000:80
     restart: always
