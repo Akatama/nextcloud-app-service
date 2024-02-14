@@ -23,6 +23,12 @@ jobs:
         pwsh: true
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'cccis-jlindsey-sandbox(ff95cccd-cbb7-41a2-b4ba-41917218c03c)'
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage account keys list  --account-name $nextcloudjimmystorage --resource-group nextcloud --query [0].value'
+    - task: AzureCLI@2
       displayName: Deploy App Service and Partially Configure
       inputs:
         azureSubscription: 'cccis-jlindsey-sandbox(ff95cccd-cbb7-41a2-b4ba-41917218c03c)'
