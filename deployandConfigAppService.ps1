@@ -54,6 +54,8 @@ az webapp config appsettings set --name $appName --resource-group $ResourceGroup
 # Gets the storage account key, then mounts it as a storage path on the web app
 $key = az storage account keys list  --account-name $storageAccountName --resource-group $ResourceGroupName --query [0].value
 
+Write-Host $key
+
 az webapp config storage-account add --name $appName --resource-group $ResourceGroupName --account-name $storageAccountName --access-key $key --share-name 'nextcloud-data' --custom-id 'data' --storage-type AzureFiles --mount-path '/var/www/html/data'
 
 # Allows our webapp to connect to the server
